@@ -14,9 +14,10 @@ object BetaInvitationRequestController extends Controller {
   val betaInvitationRequestForm = Form(betaInvitationRequestMapping)
 
   def create = Action { implicit request =>
+      println("Start of method  " + request.body)
       betaInvitationRequestForm.bindFromRequest.fold(
-        formWithErrors => BadRequest(formWithErrors.errorsAsJson),
-        value => Ok(Json.toJson(successResponse))
+        formWithErrors => {println("Form with errors " + request.body); BadRequest(formWithErrors.errorsAsJson)},
+        value => {println("Valid form " + request.body); Ok(Json.toJson(successResponse))}
       )
   }
 }
